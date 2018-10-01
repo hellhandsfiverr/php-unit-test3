@@ -5,3 +5,4 @@
 !/docker/app/packaged/.gitkeep
 !/src/.gitkeep
 !/bin/.gitkeep
+.DS_Store

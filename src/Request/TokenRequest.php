@@ -6,6 +6,7 @@ class TokenRequest extends AbstractRequest
 {
     private $userName;
     private $password;
+    private $token;
 
     public function getUri()
     {
@@ -53,5 +54,13 @@ class TokenRequest extends AbstractRequest
             'data[username]' => $this->getUserName(),
             'data[password]' => $this->getPassword()
         ];
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token)
+    {
+        $this->token = $token;
     }
 }

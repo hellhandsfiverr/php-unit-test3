@@ -21,4 +21,3 @@ class ClientFactoryTest extends AbstractClientSetup
         $this->assertInstanceOf(Client::class, $clientFactory());
     }
 }
-

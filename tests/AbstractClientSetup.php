@@ -2,7 +2,6 @@
 
 namespace AllDigitalRewards\Omni;
 
-
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use AllDigitalRewards\Omni\Mocks\Container;

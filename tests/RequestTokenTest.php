@@ -6,7 +6,7 @@ use AllDigitalRewards\Omni\Request\TokenRequest;
 
 class RequestTokenTest extends AbstractClientSetup
 {
-    public function testTokenRequestReturnsStatusResponse1000()
+    public function testTokenRequestReturnsTokenStringResponse()
     {
         // Setup our mock response body to return the JSON order response.
         $this->getMockResponse()
@@ -23,7 +23,7 @@ class RequestTokenTest extends AbstractClientSetup
         $tokenRequest = new TokenRequest();
         $response = $client->requestToken($tokenRequest);
 
-        $this->assertSame(1000, $response->response->status);
+        $this->assertSame('sometoken', $response);
     }
 
     private function getResponse()
