@@ -1,40 +1,19 @@
-# Docker Skeleton PHP Nginx App
+## OMNI Library
+This is the ADR OMNI API Wrapper Library
 
-## Setup
+Install
+Via Composer
 
-Delete the git folder and re-create a new repo. 
-
-```bash
-rm -rf .git
-git init
-git add --all
-git commit -m "Init"
+```
+composer config repositories.omni-sdk vcs git@bitbucket.org:alldigitalrewards/omni-sdk.git
+$ composer require alldigitalrewards/omni-sdk
 ```
 
-Create a new git repo on the ADR Team and commit this work to the new repo.
+## Testing
 
-Update [Composer.json](composer.json), change the autoload from: 
-
-`"AllDigitalRewards\\Skeleton\\": "app"` to `"AllDigitalRewards\\YourServiceName\\": "app"`
-
-Update the [AbstractController](src/Controllers/AbstractController.php) namespace to match what you updated composer.json to.
-Update the [Default Controller](src/Controllers/HomeController.php) namespace to match what you updated composer.json to. 
-
-Update the [app/routes.php](src/routes.php) to use the updated controller's namespace.
-
-Update this readme to reflect the usage of the service you are creating.
-
-Spin up Docker and test it out. 
-```bash
-cd docker
-./dev up
+```angular2html
+$ composer test
 ```
-Visit [http://localhost](http://localhost)
 
-
-# Code Style
-Always run `composer check-style` before committing any work. All our code must be [PSR-2 Compliant](https://www.php-fig.org/psr/psr-2/).
-
-# Unit Tests
-Always run `composer test` before committing any work to ensure all tests are passing. 
-It is necessary to pair all new or modified code with unit test cases.  
+## Code Style
+This repository implements PSR2 code style. Please run composer check-style before opening PRs. If necessary composer fix-style can be used to automatically clean up issues.
