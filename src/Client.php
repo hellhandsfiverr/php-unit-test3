@@ -4,7 +4,9 @@ namespace Alldigitalrewards\Omni;
 
 use Alldigitalrewards\Omni\Exception\OmniException;
 use Alldigitalrewards\Omni\Request\TokenRequest;
+use Alldigitalrewards\Omni\Request\AbstractRequest;
 use GuzzleHttp\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
@@ -26,34 +28,53 @@ class Client
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * @return mixed
+     */
     public function getToken()
     {
         return $this->token;
     }
 
+    /**
+     * @param TokenRequest $entity
+     * @return mixed
+     */
     public function requestToken(TokenRequest $entity)
     {
-        $reponse = $this->dispatch($entity);
+        $entity->setUserName($this->username);
+        $entity->setPassword($this->password);
+
+        $response = $this->dispatch($entity);
+        $tokenObject = json_decode($response);
+        $this->token = $tokenObject->message;
+        return $tokenObject;
     }
 
-    private function dispatch(Request\AbstractRequest $entity)
+    /**
+     * @param AbstractRequest $entity
+     * @return string
+     * @throws OmniException
+     */
+    private function dispatch(AbstractRequest $entity)
     {
         $response = $this->httpClient->request(
             'POST',
-            $entity->getUri(),
+            $entity->getUri() . '.json',
             [
-                /*'headers' => [
+                'headers' => [
                     'Accept' => 'application/json',
-                    'Content-Type' => 'application/json'
+                    'Content-Type' => 'application/x-www-form-urlencoded'
                 ],
-                'auth' => [$this->username, $this->password],
-                'body' => json_encode($entity)*/
+                'body' => [
+                    $entity->getBody()
+                ]
             ]
         );
 
         $responseBody = (string)$response->getBody();
 
-        if($response->getStatusCode() !== 200){
+        if($this->getStatusCode($response) !== 1000){
             throw new OmniException(
                 json_decode($responseBody)->error->message,
                 json_decode($responseBody)->error->error_code,
@@ -62,5 +83,16 @@ class Client
         }
 
         return $responseBody;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return int
+     */
+    private function getStatusCode(ResponseInterface $response): int
+    {
+        $res = json_decode($response);
+
+        return $res->status;
     }
 }
