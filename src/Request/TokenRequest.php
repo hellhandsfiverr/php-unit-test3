@@ -1,7 +1,6 @@
 <?php
 
-namespace Alldigitalrewards\Omni\Request;
-
+namespace AllDigitalRewards\Omni\Request;
 
 class TokenRequest extends AbstractRequest
 {
@@ -52,7 +51,7 @@ class TokenRequest extends AbstractRequest
     {
         return [
             'data[username]' => $this->getUserName(),
-            'password' => $this->getPassword()
+            'data[password]' => $this->getPassword()
         ];
     }
 }

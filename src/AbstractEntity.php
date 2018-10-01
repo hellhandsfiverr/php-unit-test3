@@ -1,6 +1,6 @@
 <?php
 
-namespace Alldigitalrewards\Omni\Response;
+namespace AllDigitalRewards\Omni;
 
 abstract class AbstractEntity
 {

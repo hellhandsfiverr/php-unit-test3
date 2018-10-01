@@ -1,8 +1,8 @@
 <?php
 
-namespace Alldigitalrewards\Omni\Request;
+namespace AllDigitalRewards\Omni\Request;
 
-use Alldigitalrewards\Omni\Response\AbstractEntity;
+use AllDigitalRewards\Omni\AbstractEntity;
 
 abstract class AbstractRequest extends AbstractEntity
 {

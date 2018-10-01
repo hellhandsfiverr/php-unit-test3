@@ -1,6 +1,6 @@
 <?php
 
-namespace Alldigitalrewards\Omni\Exception;
+namespace AllDigitalRewards\Omni\Exception;
 
 class OmniException extends \Exception
 {
