@@ -3,6 +3,7 @@
 namespace Alldigitalrewards\Omni;
 
 use Alldigitalrewards\Omni\Exception\OmniException;
+use Alldigitalrewards\Omni\Request\TokenRequest;
 use GuzzleHttp\ClientInterface;
 
 class Client
@@ -30,23 +31,23 @@ class Client
         return $this->token;
     }
 
-    public function requestToken()
+    public function requestToken(TokenRequest $entity)
     {
-        //$reponse =
+        $reponse = $this->dispatch($entity);
     }
 
     private function dispatch(Request\AbstractRequest $entity)
     {
         $response = $this->httpClient->request(
-            $entity->getHttpMethod(),
+            'POST',
             $entity->getUri(),
             [
-                'headers' => [
+                /*'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json'
                 ],
                 'auth' => [$this->username, $this->password],
-                'body' => json_encode($entity)
+                'body' => json_encode($entity)*/
             ]
         );
 
