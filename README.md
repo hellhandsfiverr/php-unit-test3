@@ -17,10 +17,10 @@ Update [Composer.json](composer.json), change the autoload from:
 
 `"AllDigitalRewards\\Skeleton\\": "app"` to `"AllDigitalRewards\\YourServiceName\\": "app"`
 
-Update the [AbstractController](app/Controllers/AbstractController.php) namespace to match what you updated composer.json to.
-Update the [Default Controller](app/Controllers/HomeController.php) namespace to match what you updated composer.json to. 
+Update the [AbstractController](src/Controllers/AbstractController.php) namespace to match what you updated composer.json to.
+Update the [Default Controller](src/Controllers/HomeController.php) namespace to match what you updated composer.json to. 
 
-Update the [app/routes.php](app/routes.php) to use the updated controller's namespace.
+Update the [app/routes.php](src/routes.php) to use the updated controller's namespace.
 
 Update this readme to reflect the usage of the service you are creating.
 
