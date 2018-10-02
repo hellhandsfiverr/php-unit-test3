@@ -3,14 +3,11 @@
 namespace AllDigitalRewards\Omni;
 
 use AllDigitalRewards\Omni\Exception\OmniException;
-use AllDigitalRewards\Omni\Request\AddFundsRequest;
-use AllDigitalRewards\Omni\Request\GetAccountRequest;
-use AllDigitalRewards\Omni\Request\GetAccountsRequest;
-use AllDigitalRewards\Omni\Request\PasswordChangeRequest;
+use AllDigitalRewards\Omni\Request\EgiftCardRequest;
 use AllDigitalRewards\Omni\Request\TokenRequest;
 use AllDigitalRewards\Omni\Request\AbstractRequest;
-use AllDigitalRewards\Omni\Response\AddFundsResponse;
-use AllDigitalRewards\Omni\Response\GetAccountResponse;
+use AllDigitalRewards\Omni\Response\EgiftGetCardResponse;
+use AllDigitalRewards\Omni\Response\EgiftGetOrderResponse;
 use GuzzleHttp\ClientInterface;
 
 class Client
@@ -67,10 +64,36 @@ class Client
     }
 
     /**
-     * @param PasswordChangeRequest $entity
-     * @return string
+     * @param EgiftCardRequest $entity
+     * @return EgiftGetCardResponse
      */
-    public function passwordChange(PasswordChangeRequest $entity)
+    public function egiftGetCard(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+
+        return new EgiftGetCardResponse($response['card']);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return EgiftGetCardResponse
+     */
+    public function egiftSendEmail(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+
+        return new EgiftGetCardResponse($response['card']);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return mixed
+     */
+    public function egiftGetCardBalance(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 
@@ -78,46 +101,79 @@ class Client
     }
 
     /**
-     * @param GetAccountRequest $entity
-     * @return GetAccountResponse
+     * @param EgiftCardRequest $entity
+     * @return mixed
      */
-    public function getAccount(GetAccountRequest $entity)
+    public function egiftLoadCard(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        return $this->dispatch($entity);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return EgiftGetOrderResponse
+     */
+    public function egiftGetOrder(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 
         $response = $this->dispatch($entity);
 
-        return new GetAccountResponse($response->account);
+        return new EgiftGetOrderResponse($response['order']);
     }
 
     /**
-     * @param GetAccountsRequest $entity
+     * @param EgiftCardRequest $entity
      * @return array
      */
-    public function getAccounts(GetAccountsRequest $entity)
+    public function egiftGetOrders(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 
         $response = $this->dispatch($entity);
-
-        $accounts = [];
+        $orders = [];
         foreach ($response as $item) {
-            $accounts[] = new GetAccountResponse($item->account);
+            $orders[] = new EgiftGetOrderResponse($item['order']);
         }
-        return $accounts;
+
+        return $orders;
     }
 
     /**
-     * @param AddFundsRequest $entity
-     * @return AddFundsResponse
+     * @param EgiftCardRequest $entity
+     * @return mixed
      */
-    public function addFunds(AddFundsRequest $entity)
+    public function egiftOrder(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        return $this->dispatch($entity);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return EgiftGetCardResponse
+     */
+    public function egiftAddToOrder(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 
         $response = $this->dispatch($entity);
 
-        return new AddFundsResponse($response->funds_account_transaction);
+        return new EgiftGetCardResponse($response['card']);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return mixed
+     */
+    public function egiftCompleteOrder(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        return $this->dispatch($entity);
     }
 
     /**
@@ -141,12 +197,12 @@ class Client
 
         $this->responseBody = json_decode((string)$response->getBody(), true);
 
-        if ($this->responseBody->response->status !== 1000) {
+        if ($this->responseBody['response']['status'] !== 1000) {
             throw new OmniException(
-                $this->responseBody->response->message->errors[0]
+                $this->responseBody['response']['message']
             );
         }
 
-        return $this->responseBody->response->message;
+        return $this->responseBody['response']['message'];
     }
 }
