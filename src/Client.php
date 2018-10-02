@@ -49,7 +49,7 @@ class Client
 
     /**
      * @param TokenRequest $entity
-     * @return mixed
+     * @return string
      */
     public function requestToken(TokenRequest $entity)
     {
@@ -65,7 +65,7 @@ class Client
 
     /**
      * @param PasswordChangeRequest $entity
-     * @return mixed
+     * @return string
      */
     public function passwordChange(PasswordChangeRequest $entity)
     {
@@ -78,7 +78,7 @@ class Client
 
     /**
      * @param GetAccountRequest $entity
-     * @return mixed
+     * @return GetAccountResponse
      */
     public function getAccount(GetAccountRequest $entity)
     {
