@@ -2,32 +2,19 @@
 
 namespace AllDigitalRewards\Omni\Request;
 
-class PasswordChangeRequest extends AbstractRequest
+class GetAccountsRequest extends AbstractRequest
 {
-    /**
-     * @var string
-     */
-    private $password;
     /**
      * @var string
      */
     private $token;
 
     /**
-     * PasswordChangeRequest constructor.
-     * @param string $password
-     */
-    public function __construct(string $password)
-    {
-        $this->password = $password;
-    }
-
-    /**
      * @return string
      */
     public function getUri(): string
     {
-        return 'apiUsers/passwd';
+        return 'funds/getAccounts';
     }
 
     /**
@@ -36,8 +23,7 @@ class PasswordChangeRequest extends AbstractRequest
     public function getBody(): array
     {
         return [
-            'data[token]' => $this->token,
-            'data[password]' => $this->password,
+            'data[token]' => $this->token
         ];
     }
 

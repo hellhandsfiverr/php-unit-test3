@@ -4,6 +4,7 @@ namespace AllDigitalRewards\Omni\Response;
 
 use AllDigitalRewards\Omni\AbstractEntity;
 use AllDigitalRewards\Omni\Entities\Transaction;
+use AllDigitalRewards\Omni\Entities\User;
 
 class GetAccountResponse extends AbstractEntity
 {
@@ -11,6 +12,9 @@ class GetAccountResponse extends AbstractEntity
     private $type;
     private $balance;
     private $created;
+    /**
+     * @var User|null
+     */
     private $user;
     /**
      * @var Transaction[]
@@ -89,19 +93,23 @@ class GetAccountResponse extends AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
     /**
-     * @param mixed $user
+     * @param array|null $user
      */
-    public function setUser($user)
+    public function setUser(?array $user)
     {
-        $this->user = $user;
+        if (is_null($user) === true) {
+            $this->user = null;
+            return;
+        }
+        $this->user = new User($user);
     }
 
     /**
@@ -113,10 +121,12 @@ class GetAccountResponse extends AbstractEntity
     }
 
     /**
-     * @param Transaction[] $transaction
+     * @param array $transactions
      */
-    public function setTransaction(array $transaction)
+    public function setTransaction(array $transactions)
     {
-        $this->transaction = $transaction;
+        foreach ($transactions as $transaction) {
+            $this->transaction[] = new Transaction($transaction);
+        }
     }
 }

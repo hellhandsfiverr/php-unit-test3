@@ -4,27 +4,39 @@ namespace AllDigitalRewards\Omni\Request;
 
 class TokenRequest extends AbstractRequest
 {
+    /**
+     * @var string
+     */
     private $userName;
+    /**
+     * @var string
+     */
     private $password;
+    /**
+     * @var string
+     */
     private $token;
 
-    public function getUri()
+    /**
+     * @return string
+     */
+    public function getUri(): string
     {
         return 'apiUsers/auth';
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getUserName()
+    public function getUserName(): string
     {
         return $this->userName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -48,7 +60,7 @@ class TokenRequest extends AbstractRequest
     /**
      * @return array
      */
-    public function getBody()
+    public function getBody(): array
     {
         return [
             'data[username]' => $this->getUserName(),

@@ -3,10 +3,13 @@
 namespace AllDigitalRewards\Omni;
 
 use AllDigitalRewards\Omni\Exception\OmniException;
+use AllDigitalRewards\Omni\Request\AddFundsRequest;
 use AllDigitalRewards\Omni\Request\GetAccountRequest;
+use AllDigitalRewards\Omni\Request\GetAccountsRequest;
 use AllDigitalRewards\Omni\Request\PasswordChangeRequest;
 use AllDigitalRewards\Omni\Request\TokenRequest;
 use AllDigitalRewards\Omni\Request\AbstractRequest;
+use AllDigitalRewards\Omni\Response\AddFundsResponse;
 use AllDigitalRewards\Omni\Response\GetAccountResponse;
 use GuzzleHttp\ClientInterface;
 
@@ -56,11 +59,11 @@ class Client
         $entity->setUserName($this->username);
         $entity->setPassword($this->password);
 
-        $this->dispatch($entity);
+        $response = $this->dispatch($entity);
 
-        $this->setToken($this->responseBody->response->message);
+        $this->setToken($response);
 
-        return $this->responseBody->response->message;
+        return $response;
     }
 
     /**
@@ -71,9 +74,7 @@ class Client
     {
         $entity->setToken($this->getToken());
 
-        $this->dispatch($entity);
-
-        return $this->responseBody->response->message;
+        return $this->dispatch($entity);
     }
 
     /**
@@ -84,14 +85,44 @@ class Client
     {
         $entity->setToken($this->getToken());
 
-        $this->dispatch($entity);
+        $response = $this->dispatch($entity);
 
-        return new GetAccountResponse((array)$this->responseBody->response->message);
+        return new GetAccountResponse($response->account);
+    }
+
+    /**
+     * @param GetAccountsRequest $entity
+     * @return array
+     */
+    public function getAccounts(GetAccountsRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+
+        $accounts = [];
+        foreach ($response as $item) {
+            $accounts[] = new GetAccountResponse($item->account);
+        }
+        return $accounts;
+    }
+
+    /**
+     * @param AddFundsRequest $entity
+     * @return AddFundsResponse
+     */
+    public function addFunds(AddFundsRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+
+        return new AddFundsResponse($response->funds_account_transaction);
     }
 
     /**
      * @param AbstractRequest $entity
-     * @return string
+     * @return mixed
      * @throws OmniException
      */
     private function dispatch(AbstractRequest $entity)
@@ -108,7 +139,7 @@ class Client
             ]
         );
 
-        $this->responseBody = json_decode((string)$response->getBody());
+        $this->responseBody = json_decode((string)$response->getBody(), true);
 
         if ($this->responseBody->response->status !== 1000) {
             throw new OmniException(
@@ -116,6 +147,6 @@ class Client
             );
         }
 
-        return $this->responseBody;
+        return $this->responseBody->response->message;
     }
 }
