@@ -79,19 +79,6 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return EgiftGetCardResponse
-     */
-    public function egiftSendEmail(EgiftCardRequest $entity)
-    {
-        $entity->setToken($this->getToken());
-
-        $response = $this->dispatch($entity);
-
-        return new EgiftGetCardResponse($response['card']);
-    }
-
-    /**
-     * @param EgiftCardRequest $entity
      * @return mixed
      */
     public function egiftGetCardBalance(EgiftCardRequest $entity)

@@ -2,6 +2,8 @@
 
 namespace AllDigitalRewards\Omni\Request;
 
+use AllDigitalRewards\Omni\Exception\OmniException;
+
 class EgiftCardRequest extends AbstractRequest
 {
     private $uri;
@@ -10,6 +12,7 @@ class EgiftCardRequest extends AbstractRequest
 
     /**
      * @param int $cardId
+     * @throws OmniException
      */
     public function getCard(int $cardId)
     {
@@ -30,21 +33,6 @@ class EgiftCardRequest extends AbstractRequest
             'data[card_id]' => $cardId,
             'data[card_number]' => $cardNumber
         ];
-    }
-
-    /**
-     * @param int $cardId
-     * @param string $email
-     */
-    public function sendEmail(int $cardId, string $email = '')
-    {
-        $this->uri = 'egiftCards/sendEmail';
-        $this->body = [
-            'data[card_id]' => $cardId
-        ];
-        if (!empty($email)) {
-            $this->body['data[email]'] = $email;
-        }
     }
 
     /**
