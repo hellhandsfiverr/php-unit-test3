@@ -3,7 +3,6 @@
 namespace AllDigitalRewards\Omni\Response;
 
 use AllDigitalRewards\Omni\AbstractEntity;
-use AllDigitalRewards\Omni\Entities\Template;
 
 class EgiftCatalogProductResponse extends AbstractEntity
 {
@@ -116,10 +115,15 @@ class EgiftCatalogProductResponse extends AbstractEntity
     {
         if (!empty($templates)) {
             foreach ($templates as $template) {
-                $this->templates[] = new Template($template);
+                $this->templates[] = $template;
             }
             return;
         }
         $this->templates[] = $templates;
+    }
+
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }
