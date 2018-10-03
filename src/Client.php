@@ -6,6 +6,7 @@ use AllDigitalRewards\Omni\Exception\OmniException;
 use AllDigitalRewards\Omni\Request\EgiftCardRequest;
 use AllDigitalRewards\Omni\Request\TokenRequest;
 use AllDigitalRewards\Omni\Request\AbstractRequest;
+use AllDigitalRewards\Omni\Response\EgiftCatalogProductResponse;
 use AllDigitalRewards\Omni\Response\EgiftGetCardResponse;
 use AllDigitalRewards\Omni\Response\EgiftGetOrderResponse;
 use GuzzleHttp\ClientInterface;
@@ -174,6 +175,36 @@ class Client
         $entity->setToken($this->getToken());
 
         return $this->dispatch($entity);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return EgiftCatalogProductResponse
+     */
+    public function getEgiftCatalogProduct(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+
+        return new EgiftCatalogProductResponse($response['merchant']);
+    }
+
+    /**
+     * @param EgiftCardRequest $entity
+     * @return array
+     */
+    public function getEgiftCatalogProducts(EgiftCardRequest $entity)
+    {
+        $entity->setToken($this->getToken());
+
+        $response = $this->dispatch($entity);
+        
+        $products = [];
+        foreach ($response as $item) {
+            $products[] = new EgiftCatalogProductResponse($item['merchant']);
+        }
+        return $products;
     }
 
     /**

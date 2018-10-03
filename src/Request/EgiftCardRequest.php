@@ -77,7 +77,6 @@ class EgiftCardRequest extends AbstractRequest
         string $paymentMethod,
         int $accountId = null
     ) {
-    
         $this->uri = 'cards/load';
         $this->body = [
             'data[card_id]' => $cardId,
@@ -100,7 +99,6 @@ class EgiftCardRequest extends AbstractRequest
         string $merchant_template_id,
         array $contact
     ) {
-    
         $this->uri = 'egiftOrders/start';
         $this->body = [
             'data[merchant_code]' => $merchant_code,
@@ -113,11 +111,14 @@ class EgiftCardRequest extends AbstractRequest
         ];
     }
 
+    /**
+     * @param int $orderId
+     * @param array $card
+     */
     public function addToOrder(
         int $orderId,
         array $card
     ) {
-    
         $this->uri = 'egiftOrders/start';
         $this->body = [
             'data[order_id]' => $orderId,
@@ -142,6 +143,22 @@ class EgiftCardRequest extends AbstractRequest
             'data[options][payment_type]' => $options['payment_type'],
             'data[options][account_id]' => (int)$options['account_id'],
         ];
+    }
+
+    /**
+     * @param string $merchantCode
+     */
+    public function getCatalogProduct(string $merchantCode)
+    {
+        $this->uri = 'orderOptions/getMerchant';
+        $this->body = [
+            'data[merchant_code]' => $merchantCode
+        ];
+    }
+
+    public function getCatalog()
+    {
+        $this->uri = 'orderOptions/getMerchants';
     }
 
     /**
