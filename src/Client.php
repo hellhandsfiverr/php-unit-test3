@@ -90,17 +90,6 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return mixed
-     */
-    public function egiftLoadCard(EgiftCardRequest $entity)
-    {
-        $entity->setToken($this->getToken());
-
-        return $this->dispatch($entity);
-    }
-
-    /**
-     * @param EgiftCardRequest $entity
      * @return EgiftGetOrderResponse
      */
     public function egiftGetOrder(EgiftCardRequest $entity)
@@ -144,7 +133,7 @@ class Client
      * @param EgiftCardRequest $entity
      * @return EgiftGetCardResponse
      */
-    public function egiftAddToOrder(EgiftCardRequest $entity)
+    public function egiftAddCardToOrder(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 

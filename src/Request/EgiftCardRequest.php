@@ -52,50 +52,22 @@ class EgiftCardRequest extends AbstractRequest
     }
 
     /**
-     * @param int $cardId
-     * @param int $cardNumber
-     * @param float $amount
-     * @param string $paymentMethod
-     * @param int|null $accountId
-     */
-    public function loadCard(
-        int $cardId,
-        int $cardNumber,
-        float $amount,
-        string $paymentMethod,
-        int $accountId = null
-    ) {
-        $this->uri = 'cards/load';
-        $this->body = [
-            'data[card_id]' => $cardId,
-            'data[card_number]' => $cardNumber,
-            'data[amount]' => $amount,
-            'data[payment_method]' => $paymentMethod,
-        ];
-        if (!is_null($accountId)) {
-            $this->body['data[account_id]'] = $accountId;
-        }
-    }
-
-    /**
      * @param string $merchant_code
      * @param string $merchant_template_id
-     * @param array $contact
      */
     public function order(
         string $merchant_code,
-        string $merchant_template_id,
-        array $contact
+        string $merchant_template_id
     ) {
         $this->uri = 'egiftOrders/start';
         $this->body = [
             'data[merchant_code]' => $merchant_code,
             'data[merchant_template_id]' => $merchant_template_id,
             'data[delivery]' => 'download',
-            'data[contact][name]' => $contact['name'],
-            'data[contact][email]' => $contact['email'],
-            'data[contact][organization]' => $contact['organization'],
-            'data[contact][phone]' => $contact['phone'] ?? '',
+            'data[contact][name]' => 'All Digital Rewards',
+            'data[contact][email]' => 'csr@alldigitalrewards.com',
+            'data[contact][organization]' => 'All Digital Rewards',
+            'data[contact][phone]' => '',
         ];
     }
 
@@ -103,7 +75,7 @@ class EgiftCardRequest extends AbstractRequest
      * @param int $orderId
      * @param array $card
      */
-    public function addToOrder(
+    public function addCardOrder(
         int $orderId,
         array $card
     ) {
@@ -112,7 +84,7 @@ class EgiftCardRequest extends AbstractRequest
             'data[order_id]' => $orderId,
             'data[card][first_name]' => $card['first_name'],
             'data[card][last_name]' => $card['last_name'],
-            'data[card][denomination]' => (float)$card['denomination'],
+            'data[card][denomination]' => number_format(($card['denomination'] /100), 2, '.', ' '),
             'data[card][message]' => $card['message'],
             'data[card][email]' => $card['email'] ?? '',
         ];
