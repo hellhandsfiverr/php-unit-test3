@@ -9,6 +9,7 @@ class EgiftGetOrderResponse extends AbstractEntity
     private $id;
     private $date_submitted;
     private $date_approved;
+    private $date_verified;
     private $date_processed;
     private $date_cancelled;
     private $date_shipped;
@@ -24,6 +25,9 @@ class EgiftGetOrderResponse extends AbstractEntity
     private $reloadable;
     private $payment_type;
     private $order_payment;
+    private $order_card;
+    private $type;
+    private $created;
 
     public function __construct($data = null)
     {
@@ -318,5 +322,69 @@ class EgiftGetOrderResponse extends AbstractEntity
     public function setOrderPayment($order_payment)
     {
         $this->order_payment = $order_payment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateVerified()
+    {
+        return $this->date_verified;
+    }
+
+    /**
+     * @param mixed $date_verified
+     */
+    public function setDateVerified($date_verified)
+    {
+        $this->date_verified = $date_verified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderCard()
+    {
+        return $this->order_card;
+    }
+
+    /**
+     * @param mixed $order_card
+     */
+    public function setOrderCard($order_card)
+    {
+        $this->order_card = $order_card;
     }
 }

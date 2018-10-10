@@ -103,7 +103,7 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return array
+     * @return EgiftGetOrderResponse[]
      */
     public function egiftGetOrders(EgiftCardRequest $entity)
     {
@@ -120,9 +120,9 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return mixed
+     * @return array
      */
-    public function egiftOrder(EgiftCardRequest $entity)
+    public function egiftStartOrder(EgiftCardRequest $entity)
     {
         $entity->setToken($this->getToken());
 
@@ -144,7 +144,7 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return mixed
+     * @return array
      */
     public function egiftCompleteOrder(EgiftCardRequest $entity)
     {
@@ -168,7 +168,7 @@ class Client
 
     /**
      * @param EgiftCardRequest $entity
-     * @return array
+     * @return EgiftCatalogProductResponse[]
      */
     public function getEgiftCatalogProducts(EgiftCardRequest $entity)
     {

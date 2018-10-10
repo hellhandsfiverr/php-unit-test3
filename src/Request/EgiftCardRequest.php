@@ -55,7 +55,7 @@ class EgiftCardRequest extends AbstractRequest
      * @param string $merchant_code
      * @param string $merchant_template_id
      */
-    public function order(
+    public function startOrder(
         string $merchant_code,
         string $merchant_template_id
     ) {
@@ -65,7 +65,7 @@ class EgiftCardRequest extends AbstractRequest
             'data[merchant_template_id]' => $merchant_template_id,
             'data[delivery]' => 'download',
             'data[contact][name]' => 'All Digital Rewards',
-            'data[contact][email]' => 'csr@alldigitalrewards.com',
+            'data[contact][email]' => 'jmuto@alldigitalrewards.com',
             'data[contact][organization]' => 'All Digital Rewards',
             'data[contact][phone]' => '',
         ];
@@ -79,29 +79,28 @@ class EgiftCardRequest extends AbstractRequest
         int $orderId,
         array $card
     ) {
-        $this->uri = 'egiftOrders/start';
+        $this->uri = 'egiftOrders/addCard';
         $this->body = [
             'data[order_id]' => $orderId,
             'data[card][first_name]' => $card['first_name'],
             'data[card][last_name]' => $card['last_name'],
-            'data[card][denomination]' => number_format(($card['denomination'] /100), 2, '.', ' '),
+            'data[card][denomination]' => $card['denomination'],
             'data[card][message]' => $card['message'],
-            'data[card][email]' => $card['email'] ?? '',
+            'data[card][email]' => '',
         ];
     }
 
     /**
      * @param int $orderId
-     * @param array $options
+     * @param string $paymentType
      */
-    public function completeOrder(int $orderId, array $options)
+    public function completeOrder(int $orderId, string $paymentType)
     {
         $this->uri = 'egiftOrders/complete';
         $this->body = [
             'data[order_id]' => $orderId,
-            'data[options][digital_signature]' => $options['digital_signature'],
-            'data[options][payment_type]' => $options['payment_type'],
-            'data[options][account_id]' => (int)$options['account_id'],
+            'data[options][digital_signature]' => 'Technology API',
+            'data[options][payment_type]' => strtolower(trim($paymentType))
         ];
     }
 
