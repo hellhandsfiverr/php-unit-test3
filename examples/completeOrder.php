@@ -1,9 +1,7 @@
 <?php
 require __DIR__ . '/token_request.php';
 
-//Order Id #52177864
-//Card Id #52852407
-
+//using order # from start_order.php ex.52177864
 //Payment types: wire, check, fundsbank
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
 $request->completeOrder(52177864, 'wire');
