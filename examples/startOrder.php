@@ -7,13 +7,5 @@ require __DIR__ . '/token_request.php';
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
 $request->startOrder('978', '2115');
 $response = $omni->egiftStartOrder($request);
-print_r($response['order_id']);
 
-/**
- * Response ex.
- *
- * Array
-(
-[order_id] => 52177864
-)
- */
+print_r($response);
