@@ -12,7 +12,7 @@ $ composer require alldigitalrewards/omni-sdk
 ## Usage
 
 ###Client setup
-```angularjs
+```
 $username = 'technology@alldigitalrewards.com';
 $password = '9m9k9Tx2$g!aV5XLV&$D';
 $httpClient = new \GuzzleHttp\Client([
@@ -38,42 +38,63 @@ $response = $omni->requestToken($request);
 print_r($response);
 ```
 
+####Start Order then Add to Order then Complete Order is the OMNI Process for Creating an Order
+
 ###Egift Start Order
 ```
-Keys for the $contact should be:
- $contact['name'],
- $contact['email'],
- $contact['organization'],
- $contact['phone'] //optional
-
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
-$request->order(
+$request->startOrder(
   string $merchant_code,
-  string $merchant_template_id,
-  array $contact
+  string $merchant_template_id
 );
-$response = $omni->egiftOrder($request);
-
+$response = $omni->egiftStartOrder($request);
+print_r($response);
+```
+###Egift Add To Order
+```
+//using order_id # from Start Order response
+$request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
+$cardConfig = [
+    'first_name' => 'Joe',
+    'last_name' => 'Muto',
+    'denomination' => 5.00,
+    'message' => 'My First Omni Order- Test'
+];
+$request->addCardOrder(52177864, $cardConfig);
+$response = $omni->egiftAddCardToOrder($request);
 print_r($response);
 ```
 
+
 ###Egift Complete Order
 ```
-Keys for the $options should be:
- $options['digital_signature'], //string
- $options['payment_type'], //string
- $options['account_id'] //int
-
+//using order_id # from Start Order response
+//Payment types: wire, check, fundsbank
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
-$request->completeOrder(int $orderId, array $options);
+$request->completeOrder(52177864, 'wire');
 $response = $omni->egiftCompleteOrder($request);
+print_r($response);
+```
 
+###Egift Get Order
+```
+//using order_id # from Start Order response
+$request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
+$request->getOrder(52177864);
+$response = $omni->egiftGetOrder($request);
+print_r($response);
+```
+###Egift Get Orders
+```
+$request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
+$request->getOrders();
+$response = $omni->egiftGetOrders($request);
 print_r($response);
 ```
 
 ## Testing
 
-```angular2html
+```
 $ composer test
 ```
 

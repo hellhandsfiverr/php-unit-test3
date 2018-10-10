@@ -5,7 +5,7 @@ require __DIR__ . '/token_request.php';
 //get First Template Id
 
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
-$request->startOrder('978', $product->getTemplates()[0]['id']);
+$request->startOrder('978', '2115');
 $response = $omni->egiftStartOrder($request);
 print_r($response);
 
