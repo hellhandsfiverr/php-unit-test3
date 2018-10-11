@@ -42,6 +42,13 @@ print_r($response);
 
 ###Egift Start Order
 ```
+//A $merchant_code is OMNI's equivalent to a SKU. 
+//A $merchant_template_id is OMNI's Product Image Template Id. 
+
+*A Product can have many Templates (Image Templates), currently, we
+take the first Template in the array and use that $merchant_template_id
+until we discuss this further.
+
 $request = new \AllDigitalRewards\Omni\Request\EgiftCardRequest();
 $request->startOrder(
   string $merchant_code,
