@@ -92,15 +92,15 @@ class EgiftCardRequest extends AbstractRequest
 
     /**
      * @param int $orderId
-     * @param string $paymentType
      */
-    public function completeOrder(int $orderId, string $paymentType)
+    public function completeOrder(int $orderId)
     {
         $this->uri = 'egiftOrders/complete';
         $this->body = [
             'data[order_id]' => $orderId,
             'data[options][digital_signature]' => 'Technology API',
-            'data[options][payment_type]' => strtolower(trim($paymentType))
+            'data[options][payment_type]' => 'fundsbank',
+            'data[options][account_id]' => 14632
         ];
     }
 
