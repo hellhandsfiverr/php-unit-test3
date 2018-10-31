@@ -12,6 +12,8 @@ class EgiftCatalogProductResponse extends AbstractEntity
     private $max_denomination;
     private $denominations;
     private $templates;
+    private $description;
+    private $terms;
 
     public function __construct($data = null)
     {
@@ -106,6 +108,38 @@ class EgiftCatalogProductResponse extends AbstractEntity
     public function getTemplates()
     {
         return $this->templates;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTerms()
+    {
+        return $this->terms;
+    }
+
+    /**
+     * @param mixed $terms
+     */
+    public function setTerms($terms)
+    {
+        $this->terms = $terms;
     }
 
     /**
